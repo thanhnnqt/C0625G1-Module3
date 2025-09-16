@@ -16,7 +16,8 @@ dia_chi varchar(50)
 create table don_hang (
 ma_don_hang int primary key auto_increment,
 ngay_tao_don_hang date,
-foreign key (ma_don_hang) references nha_cung_cap (ma_cung_cap)
+ma_cung_cap int,
+foreign key (ma_cung_cap) references nha_cung_cap (ma_cung_cap)
 );
 create table vat_tu (
 ma_vat_tu int primary key auto_increment,
@@ -25,6 +26,8 @@ ten_vat_tu varchar(50)
 create table phieu_xuat_vat_tu (
 phieu_xuat int,
 vat_tu int,
+gia_xuat double,
+so_luong int,
 primary key (phieu_xuat, vat_tu),
 foreign key (phieu_xuat) references phieu_xuat (ma_phieu_xuat),
 foreign key (vat_tu) references vat_tu (ma_vat_tu)
@@ -32,6 +35,8 @@ foreign key (vat_tu) references vat_tu (ma_vat_tu)
 create table phieu_nhap_vat_tu (
 phieu_nhap int,
 vat_tu int,
+gia_nhap double,
+so_luong int,
 primary key (phieu_nhap, vat_tu),
 foreign key (phieu_nhap) references phieu_nhap (ma_phieu_nhap),
 foreign key (vat_tu) references vat_tu (ma_vat_tu)
