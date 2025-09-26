@@ -21,7 +21,7 @@ public class DiscountServlet extends HttpServlet {
         String text = req.getParameter("t1");
         int num1 = Integer.parseInt(req.getParameter("n1"));
         int num2 = Integer.parseInt(req.getParameter("n2"));
-        double discount = num1 * num2 * 0.001;
+        double discount = num1 * num2 * 0.01;
         req.setAttribute("discount", discount);
         req.setAttribute("num1", num1);
         req.setAttribute("num2", num2);
