@@ -12,7 +12,7 @@
 <form action="/khach-hang?action=add" method="post">
   ID
   <input name="id"><br>
-  Tên
+  <Tên></Tên>
   <input name="name"><br>
   Ngày sinh
   <input name="birthDay">
