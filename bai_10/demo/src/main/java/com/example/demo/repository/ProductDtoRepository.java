@@ -11,10 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDtoRepository implements IProductDtoRepository {
-    private static final String SELECT_ALL_PRODUCT = "SELECT p.id, p.name, p.price, p.quantity, p.description, c.name AS categoryName " + "FROM product p " + "JOIN category c ON p.category_id = c.id;";
-    private static final String INSERT_PRODUCT = "INSERT INTO product (name, price, quantity, description, category_id) VALUES (?, ?, ?, ?, ?)";
-    private static final String DELETE_SQL = "DELETE FROM users WHERE id = ?";
-    private static final String UPDATE_SQL = "UPDATE users SET name = ?, email = ?, country = ? WHERE id = ?";
+    private static final String SELECT_ALL_PRODUCT = "select p.product_id, p.product_name, p.price, p.mo_ta, p.hang_san_xuat, p.so_luong, c.category_name " +
+            "from product p join category c on p.category_id = c.category_id order by p.product_id asc";
+    private static final String INSERT_PRODUCT = "insert product (product_name, price, mo_ta, hang_san_xuat, so_luong, category_id) values(?, ?, ?, ?, ?, ?)";
 
     @Override
     public List<ProductDto> findAll() {
@@ -100,13 +99,13 @@ public class ProductDtoRepository implements IProductDtoRepository {
 
     public List<ProductDto> search(String searchName, String categoryId) {
         List<ProductDto> list = new ArrayList<>();
-        StringBuilder sql = new StringBuilder("SELECT p.product_id, p.product_name, p.price, p.mo_ta, p.hang_san_xuat, p.so_luong, c.category_name AS categoryName "
-                + "FROM product p JOIN category c ON p.category_id = c.category_id WHERE 1=1 ");
+        StringBuilder sql = new StringBuilder("SELECT p.product_id, p.product_name, p.price, p.mo_ta, p.hang_san_xuat, p.so_luong, c.category_name "
+                + "FROM product p JOIN category c ON p.category_id = c.category_id WHERE 1=1");
         if (searchName != null && !searchName.isEmpty()) {
-            sql.append(" and p.name like ?");
+            sql.append(" and p.product_name like ?");
         }
         if (categoryId != null && !categoryId.isEmpty()) {
-            sql.append(" and c.id = ?");
+            sql.append(" and c.category_id = ?");
         }
         try (Connection connection = BaseRepository.getConnectDB();
              PreparedStatement ps = connection.prepareStatement(sql.toString())) {
@@ -125,7 +124,7 @@ public class ProductDtoRepository implements IProductDtoRepository {
                         rs.getString("mo_ta"),
                         rs.getString("hang_san_xuat"),
                         rs.getInt("so_luong"),
-                        rs.getString("caterogy_name")));
+                        rs.getString("category_name")));
             }
         } catch (SQLException e) {
             e.printStackTrace();

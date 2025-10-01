@@ -15,13 +15,12 @@
 <body>
 <div class="container mt-4">
 <c:import url="../layout/navbar.jsp"/>
-<a href="/products?action=add"> Thêm mới </a>
 <h1>Danh sách sản phẩm</h1>
 <form method="get" action="/products" class="row g-2 mb-3">
     <input type="hidden" name="action" value="search"/>
     <div class="col-md-4">
         <input type="text" name="product_name" class="form-control" placeholder="Nhập tên sản phẩm"
-               value="${param.name}"/>
+               value="${param.productName}"/>
     </div>
     <div class="col-md-3">
         <select name="categoryId" class="form-control">
@@ -48,8 +47,9 @@
         <th>Loại sản phẩm</th>
         <th>Hãng sản xuất</th>
         <th>Số lượng</th>
+        <th></th>
     </tr>
-    <c:forEach var="product" items="${productList}" varStatus="status">
+    <c:forEach var="product" items="${products}" varStatus="status">
         <tr>
             <td>${status.count}</td>
             <td>${product.tenSanPham}</td>
@@ -57,6 +57,7 @@
             <td>${product.moTaSanPham}</td>
             <td>${product.hangSanXuat}</td>
             <td>${product.soLuong}</td>
+            <td>${product.categoryName}</td>
         </tr>
     </c:forEach>
 </table>

@@ -61,7 +61,7 @@ public class ProductController extends HttpServlet {
 
     private void listProducts(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        String searchName = req.getParameter("productName");
+        String searchName = req.getParameter("product_name");
         String searchCategory = req.getParameter("categoryId");
 
         List<ProductDto> products;

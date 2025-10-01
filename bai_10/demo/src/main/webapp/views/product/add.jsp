@@ -9,7 +9,7 @@
 <body>
 <c:import url="../layout/navbar.jsp"/>
 <h1>Thêm mới</h1>
-<form action="/products?action=add" method="post">
+<form action="/products?action=create" method="post">
     Tên sản phẩm
     <input name="product_name"><br>
     Giá bán
@@ -22,7 +22,7 @@
     <input name="so_luong"><br>
     Category
     <select name="category_id">
-        <c:forEach items="${categoryList}" var="cate">
+        <c:forEach items="${categories}" var="cate">
             <option value="${cate.id}">${cate.name}</option>
         </c:forEach>
     </select>
