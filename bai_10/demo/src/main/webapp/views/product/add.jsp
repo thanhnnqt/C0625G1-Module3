@@ -11,17 +11,17 @@
 <h1>Thêm mới</h1>
 <form action="/products?action=add" method="post">
     Tên sản phẩm
-    <input name="tenSanPham"><br>
+    <input name="product_name"><br>
     Giá bán
-    <input name="giaSanPham">
+    <input name="price"><br>
     Loại sản phẩm
-    <input name="moTaSanPham"><br>
+    <input name="mo_ta"><br>
     Hãng sản xuất
-    <input name="hangSanXuat"><br>
+    <input name="hang_san_xuat"><br>
     Số lượng
-    <input name="soLuong"><br>
+    <input name="so_luong"><br>
     Category
-    <select name="cId">
+    <select name="category_id">
         <c:forEach items="${categoryList}" var="cate">
             <option value="${cate.id}">${cate.name}</option>
         </c:forEach>

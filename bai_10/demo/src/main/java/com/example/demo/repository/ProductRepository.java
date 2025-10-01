@@ -11,7 +11,10 @@ import java.util.List;
 
 public class ProductRepository implements IProductRepository {
     private final static String SELECT_ALL = "select * from product";
-    private final static String ADD_NEW = "insert into product(product_name, price, mo_ta, hang_san_xuat, so_luong, category_id) value (?,?,?,?,?,?)";
+    private final static String ADD_NEW =
+            "insert into product(product_name, price, mo_ta, hang_san_xuat, so_luong, category_id) values (?,?,?,?,?,?)";
+    private final static String SEARCH = "select p.*, c.category_name from product p join " +
+            "category c on p.category_id = c.category_id where p.product_name like ? and c.category_id = ?";
 
     @Override
     public List<Product> findAll() {
@@ -20,7 +23,7 @@ public class ProductRepository implements IProductRepository {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL);
             ResultSet resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 String tenSanPham = resultSet.getString("product_name");
                 double giaSanPham = resultSet.getDouble("price");
                 String moTaSanPham = resultSet.getString("mo_ta");
@@ -50,7 +53,7 @@ public class ProductRepository implements IProductRepository {
             int row = preparedStatement.executeUpdate();
             return row == 1;
         } catch (SQLException e) {
-            System.out.println("lỗi");
+            e.printStackTrace();
             return false;
         }
     }

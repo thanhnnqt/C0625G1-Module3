@@ -19,6 +19,7 @@ public class Product {
         this.moTaSanPham = moTaSanPham;
         this.hangSanXuat = hangSanXuat;
         this.soLuong = soLuong;
+        this.cId = cId;
     }
     public Product(String tenSanPham, double giaSanPham, String moTaSanPham, String hangSanXuat, int soLuong, int cId) {
         this.tenSanPham = tenSanPham;
@@ -26,6 +27,7 @@ public class Product {
         this.moTaSanPham = moTaSanPham;
         this.hangSanXuat = hangSanXuat;
         this.soLuong = soLuong;
+        this.cId = cId;
     }
 
     public int getMaSanPham() {

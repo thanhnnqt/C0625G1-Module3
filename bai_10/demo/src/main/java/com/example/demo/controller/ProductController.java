@@ -1,10 +1,9 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.ProductDto;
+import com.example.demo.entity.Category;
 import com.example.demo.entity.Product;
-import com.example.demo.service.CategoryService;
-import com.example.demo.service.ICategoryService;
-import com.example.demo.service.IProductService;
-import com.example.demo.service.ProductService;
+import com.example.demo.service.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -16,7 +15,7 @@ import java.util.List;
 
 @WebServlet(name = "ProductController", value = "/products")
 public class ProductController extends HttpServlet {
-    IProductService productService = new ProductService();
+    IProductDtoService productService = new ProductDtoService();
     ICategoryService categoryService = new CategoryService();
 
     @Override
@@ -26,18 +25,18 @@ public class ProductController extends HttpServlet {
             action = "";
         }
         switch (action) {
-            case "add":
-                // trả về form thêm mới
-                req.setAttribute("categoryList", categoryService.findAll());
-                req.getRequestDispatcher("views/product/add.jsp").forward(req, resp);
+            case "create":
+                showCreateForm(req, resp);
+                break;
+            case "edit":
+                showEditForm(req, resp);
                 break;
             case "delete":
-                // xoá
+                deleteProduct(req, resp);
                 break;
             default:
-                List<Product> productList = productService.findAll();
-                req.setAttribute("productList", productList);
-                req.getRequestDispatcher("views/product/list.jsp").forward(req, resp);
+                listProducts(req, resp);
+                break;
         }
     }
 
@@ -48,26 +47,99 @@ public class ProductController extends HttpServlet {
             action = "";
         }
         switch (action) {
-            case "add":
-                String tenSanPham = req.getParameter("product_name");
-                Double giaSanPham = Double.parseDouble(req.getParameter("price"));
-                String moTaSanPham = req.getParameter("mo_ta");
-                String hangSanXuat = req.getParameter("hang_san_xuat");
-                int soLuong = Integer.parseInt(req.getParameter("so_luong"));
-                int cId = Integer.parseInt(req.getParameter("category_id"));
-                Product product = new Product(tenSanPham, giaSanPham, moTaSanPham, hangSanXuat, soLuong, cId);
-                productService.add(product);
-                List<Product> productList1 = productService.findAll();
-                req.setAttribute("productList", productList1);
-                req.getRequestDispatcher("views/product/list.jsp").forward(req, resp);
+            case "create":
+                createProduct(req, resp);
                 break;
-            case "delete":
-                // xoá
+            case "edit":
+                updateProduct(req, resp);
                 break;
             default:
-                List<Product> productList = productService.findAll();
-                req.setAttribute("productList", productList);
-                req.getRequestDispatcher("views/product/list.jsp").forward(req, resp);
+                listProducts(req, resp);
+                break;
         }
+    }
+
+    private void listProducts(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        String searchName = req.getParameter("productName");
+        String searchCategory = req.getParameter("categoryId");
+
+        List<ProductDto> products;
+        if ((searchName != null && !searchName.isEmpty()) ||
+                (searchCategory != null && !searchCategory.isEmpty())) {
+            products = productService.search(searchName, searchCategory);
+        } else {
+            products = productService.findAll();
+        }
+        List<Category> categories = categoryService.findAll();
+        req.setAttribute("products", products);
+        req.setAttribute("categories", categories);
+        req.setAttribute("selectedCategory", searchCategory);
+        req.setAttribute("searchName", searchName);
+        req.getRequestDispatcher("views/product/list.jsp").forward(req, resp);
+    }
+
+    private void showCreateForm(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        List<Category> categories = categoryService.findAll();
+        req.setAttribute("categories", categories);
+        req.getRequestDispatcher("views/product/add.jsp").forward(req, resp);
+    }
+
+    private void createProduct(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
+        String tenSanPham = req.getParameter("product_name");
+        double giaSanPham = Double.parseDouble(req.getParameter("price"));
+        String moTaSanPham = req.getParameter("mo_ta");
+        String hangSanXuat = req.getParameter("hang_san_xuat");
+        int soLuong = Integer.parseInt(req.getParameter("so_luong"));
+        int categoryId = Integer.parseInt(req.getParameter("category_id"));
+        Product product = new Product(tenSanPham, giaSanPham, moTaSanPham, hangSanXuat, soLuong, categoryId);
+        productService.add(product);
+        resp.sendRedirect("/products");
+    }
+
+    private void showEditForm(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        int id = Integer.parseInt(req.getParameter("id"));
+        Product product = productService.findByIdProduct(id);
+        List<Category> categories = categoryService.findAll();
+
+        req.setAttribute("product", product);
+        req.setAttribute("categories", categories);
+        req.getRequestDispatcher("views/product/update.jsp").forward(req, resp);
+    }
+
+    private void updateProduct(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
+        try {
+            int maSanPham = Integer.parseInt(req.getParameter("product_id"));
+            String tenSanPham = req.getParameter("product_name");
+            double giaSanPham = Double.parseDouble(req.getParameter("price"));
+            String moTaSanPham = req.getParameter("mo_ta");
+            String hangSanXuat = req.getParameter("hang_san_xuat");
+            int soLuong = Integer.parseInt(req.getParameter("so_luong"));
+            int categoryId = Integer.parseInt(req.getParameter("category_id"));
+            Product product = new Product(maSanPham, tenSanPham, giaSanPham, moTaSanPham, hangSanXuat, soLuong, categoryId);
+
+            boolean updated = productService.update(product);
+            if (updated) {
+                System.out.println("Update thành công: " + maSanPham);
+            } else {
+                System.out.println("Update thất bại: " + maSanPham);
+            }
+
+            resp.sendRedirect("/products");
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            resp.sendRedirect("/products");
+        }
+    }
+
+    private void deleteProduct(HttpServletRequest req, HttpServletResponse resp)
+            throws IOException {
+        int id = Integer.parseInt(req.getParameter("id"));
+        productService.delete(id);
+        resp.sendRedirect("/products");
     }
 }

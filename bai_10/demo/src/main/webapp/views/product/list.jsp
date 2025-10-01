@@ -13,9 +13,33 @@
     <c:import url="../layout/library.jsp"/>
 </head>
 <body>
+<div class="container mt-4">
 <c:import url="../layout/navbar.jsp"/>
 <a href="/products?action=add"> Thêm mới </a>
 <h1>Danh sách sản phẩm</h1>
+<form method="get" action="/products" class="row g-2 mb-3">
+    <input type="hidden" name="action" value="search"/>
+    <div class="col-md-4">
+        <input type="text" name="product_name" class="form-control" placeholder="Nhập tên sản phẩm"
+               value="${param.name}"/>
+    </div>
+    <div class="col-md-3">
+        <select name="categoryId" class="form-control">
+            <option value="">-- Tất cả danh mục --</option>
+            <c:forEach var="c" items="${categories}">
+                <option value="${c.id}" ${param.categoryId == c.id ? 'selected' : ''}>
+                        ${c.name}
+                </option>
+            </c:forEach>
+        </select>
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary w-100">Tìm kiếm</button>
+    </div>
+    <div class="col-md-3">
+        <a href="/products?action=create" class="btn btn-success w-100">+ Thêm sản phẩm</a>
+    </div>
+</form>
 <table class="table table-dark table-striped">
     <tr>
         <th>STT</th>
@@ -36,5 +60,6 @@
         </tr>
     </c:forEach>
 </table>
+</div>
 </body>
 </html>
