@@ -7,12 +7,20 @@ public class Product {
     private String moTaSanPham;
     private String hangSanXuat;
     private int soLuong;
+    private int cId;
 
     public Product() {
     }
 
-    public Product(int maSanPham, String tenSanPham, double giaSanPham, String moTaSanPham, String hangSanXuat, int soLuong) {
+    public Product(int maSanPham, String tenSanPham, double giaSanPham, String moTaSanPham, String hangSanXuat, int soLuong, int cId) {
         this.maSanPham = maSanPham;
+        this.tenSanPham = tenSanPham;
+        this.giaSanPham = giaSanPham;
+        this.moTaSanPham = moTaSanPham;
+        this.hangSanXuat = hangSanXuat;
+        this.soLuong = soLuong;
+    }
+    public Product(String tenSanPham, double giaSanPham, String moTaSanPham, String hangSanXuat, int soLuong, int cId) {
         this.tenSanPham = tenSanPham;
         this.giaSanPham = giaSanPham;
         this.moTaSanPham = moTaSanPham;
@@ -66,5 +74,13 @@ public class Product {
 
     public void setSoLuong(int soLuong) {
         this.soLuong = soLuong;
+    }
+
+    public int getcId() {
+        return cId;
+    }
+
+    public void setcId(int cId) {
+        this.cId = cId;
     }
 }

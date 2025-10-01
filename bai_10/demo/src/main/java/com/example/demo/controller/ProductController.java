@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Product;
+import com.example.demo.service.CategoryService;
+import com.example.demo.service.ICategoryService;
 import com.example.demo.service.IProductService;
 import com.example.demo.service.ProductService;
 import jakarta.servlet.ServletException;
@@ -15,6 +17,7 @@ import java.util.List;
 @WebServlet(name = "ProductController", value = "/products")
 public class ProductController extends HttpServlet {
     IProductService productService = new ProductService();
+    ICategoryService categoryService = new CategoryService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -25,6 +28,7 @@ public class ProductController extends HttpServlet {
         switch (action) {
             case "add":
                 // trả về form thêm mới
+                req.setAttribute("categoryList", categoryService.findAll());
                 req.getRequestDispatcher("views/product/add.jsp").forward(req, resp);
                 break;
             case "delete":
@@ -45,17 +49,16 @@ public class ProductController extends HttpServlet {
         }
         switch (action) {
             case "add":
-                // trả về form thêm mới
-                int maSanPham = Integer.parseInt(req.getParameter("maSanPham"));
-                String tenSanPham = req.getParameter("tenSanPham");
-                Double giaSanPham = Double.parseDouble(req.getParameter("giaSanPham"));
-                String moTaSanPham = req.getParameter("moTaSanPham");
-                String hangSanXuat = req.getParameter("hangSanXuat");
-                int soLuong = Integer.parseInt(req.getParameter("soLuong"));
-                Product product = new Product(maSanPham, tenSanPham, giaSanPham, moTaSanPham, hangSanXuat, soLuong);
+                String tenSanPham = req.getParameter("product_name");
+                Double giaSanPham = Double.parseDouble(req.getParameter("price"));
+                String moTaSanPham = req.getParameter("mo_ta");
+                String hangSanXuat = req.getParameter("hang_san_xuat");
+                int soLuong = Integer.parseInt(req.getParameter("so_luong"));
+                int cId = Integer.parseInt(req.getParameter("category_id"));
+                Product product = new Product(tenSanPham, giaSanPham, moTaSanPham, hangSanXuat, soLuong, cId);
                 productService.add(product);
                 List<Product> productList1 = productService.findAll();
-                req.setAttribute("productList1", productList1);
+                req.setAttribute("productList", productList1);
                 req.getRequestDispatcher("views/product/list.jsp").forward(req, resp);
                 break;
             case "delete":
