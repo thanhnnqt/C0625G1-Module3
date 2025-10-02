@@ -71,7 +71,7 @@ public class ProductDtoRepository implements IProductDtoRepository {
     }
 
     public boolean update(Product product) {
-        final String SQL = "UPDATE product SET product_name = ?, price = ?, mo_ta = ?, hang_san_xuat = ?, so_luong =?, category_id = ? WHERE category_id = ?";
+        final String SQL = "UPDATE product SET product_name = ?, price = ?, mo_ta = ?, hang_san_xuat = ?, so_luong = ?, category_id = ? WHERE product_id = ?";
         try (Connection connection = BaseRepository.getConnectDB();
              PreparedStatement ps = connection.prepareStatement(SQL)) {
 
@@ -133,7 +133,7 @@ public class ProductDtoRepository implements IProductDtoRepository {
     }
 
     public Product findByIdProduct(int id) {
-        String sql = "SELECT product_id, product_name, price, mo_ta, hang_san_xuat, so_luong, category_id FROM product WHERE category_id = ?";
+        String sql = "SELECT product_id, product_name, price, mo_ta, hang_san_xuat, so_luong, category_id FROM product WHERE product_id = ?";
         try (Connection connection = BaseRepository.getConnectDB();
              PreparedStatement ps = connection.prepareStatement(sql)) {
             ps.setInt(1, id);
