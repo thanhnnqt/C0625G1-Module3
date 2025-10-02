@@ -101,10 +101,9 @@ public class ProductController extends HttpServlet {
 
     private void showEditForm(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        int id = Integer.parseInt(req.getParameter("id"));
+        int id = Integer.parseInt(req.getParameter("product_id").trim());
         Product product = productService.findByIdProduct(id);
         List<Category> categories = categoryService.findAll();
-
         req.setAttribute("product", product);
         req.setAttribute("categories", categories);
         req.getRequestDispatcher("views/product/update.jsp").forward(req, resp);
@@ -138,8 +137,8 @@ public class ProductController extends HttpServlet {
 
     private void deleteProduct(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
-        int id = Integer.parseInt(req.getParameter("id"));
-        productService.delete(id);
+        int id = Integer.parseInt(req.getParameter("product_id").trim());
+            productService.delete(id);
         resp.sendRedirect("/products");
     }
 }

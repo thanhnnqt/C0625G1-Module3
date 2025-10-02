@@ -47,7 +47,8 @@
         <th>Loại sản phẩm</th>
         <th>Hãng sản xuất</th>
         <th>Số lượng</th>
-        <th></th>
+        <th>Mô tả</th>
+        <th>Thao tác</th>
     </tr>
     <c:forEach var="product" items="${products}" varStatus="status">
         <tr>
@@ -58,6 +59,43 @@
             <td>${product.hangSanXuat}</td>
             <td>${product.soLuong}</td>
             <td>${product.categoryName}</td>
+            <td>
+                <a href="/products?action=edit&product_id=${product.maSanPham}" class="btn btn-primary btn-sm">Sửa</a>
+                <button type="button" class="btn btn-danger btn-sm"
+                        data-bs-toggle="modal"
+                        data-bs-target="#deleteModal${product.maSanPham}">
+                    Xóa
+                </button>
+
+                <!-- Modal xác nhận -->
+                <div class="modal fade" id="deleteModal${product.maSanPham}" tabindex="-1"
+                     aria-labelledby="deleteModalLabel${product.maSanPham}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" style="color: black" id="deleteModalLabel${product.maSanPham}">
+                                    Xác nhận xóa sản phẩm
+                                </h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body text-color-black" style="color: black">
+                                Bạn có chắc muốn xóa <strong>${product.tenSanPham}</strong> không?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    Hủy
+                                </button>
+                                <!-- Nút Xóa thật sự -->
+                                <a href="/products?action=delete&product_id=${product.maSanPham}"
+                                   class="btn btn-danger">
+                                    Xóa
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
         </tr>
     </c:forEach>
 </table>

@@ -57,11 +57,11 @@ public class ProductDtoRepository implements IProductDtoRepository {
     }
 
     @Override
-    public boolean delete(int maSanPham) {
+    public boolean delete(int id) {
         String sql = "DELETE FROM product WHERE product_id = ?";
         try (Connection connection = BaseRepository.getConnectDB();
              PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, maSanPham);
+            ps.setInt(1, id);
             int rows = ps.executeUpdate();
             return rows > 0;
         } catch (SQLException e) {
