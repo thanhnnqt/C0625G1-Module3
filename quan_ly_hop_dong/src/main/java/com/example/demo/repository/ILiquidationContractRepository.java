@@ -7,10 +7,10 @@ import java.util.List;
 
 public interface ILiquidationContractRepository {
     List<LiquidationContract> findAll();
-    boolean add(Product product);
+    boolean add(LiquidationContract liquidationContract);
     boolean delete(int id);
     boolean update(Product product);
     LiquidationContract findById(int id);
     List<LiquidationContract> search(String name, String categoryId);
-    Product findByIdProduct(int id);
+    Product findByIdContract(int id);
 }

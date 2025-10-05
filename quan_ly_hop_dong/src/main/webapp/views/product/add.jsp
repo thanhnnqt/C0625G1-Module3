@@ -34,39 +34,57 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10 form-container">
-            <h2 class="mb-4">Thêm sản phẩm mới</h2>
+            <h2 class="mb-4">Thêm hợp đồng thanh lý mới</h2>
             <form action="/products?action=create" method="post">
                 <div>
-                    <label class="form-label">Tên sản phẩm</label>
-                    <input name="product_name" class="form-control" required>
+                    <label class="form-label">Ngày tạo hợp đồng</label>
+                    <input name="liquidation_date" type="date" class="form-control" required>
                 </div>
                 <div>
-                    <label class="form-label">giá bán</label>
+                    <label class="form-label">Giá hợp đồng</label>
                     <input name="price" type="number" class="form-control" required>
                 </div>
                 <div>
-                    <label class="form-label">Mô tả sản phẩm</label>
-                    <input name="mo_ta" type="text" class="form-control" required>
+                    <label class="form-label">Khách hàng</label>
+                    <input name="customer_id" type="number" class="form-control" required>
                 </div>
                 <div>
-                    <label class="form-label">Nhà sản xuất</label>
-                    <input name="hang_san_xuat" type="text"  class="form-control" required>
+                    <label class="form-label">Nhân viên</label>
+                    <input name="employee_id" type="number" class="form-control" required>
                 </div>
                 <div>
-                    <label class="form-label">Số lượng</label>
-                    <input name="so_luong" type="text"  class="form-control" required>
+                    <label class="form-label">Sản phẩm</label>
+                    <input name="product_id" type="number" class="form-control" required>
                 </div>
-                <br>
-                <div>
-                    <select name="category_id">
-                        <option>------------------------Chọn loại sản phẩm------------------------</option>
-                        <c:forEach items="${categories}" var="cate">
-                            <option value="${cate.id}">${cate.name}</option>
-                        </c:forEach>
-                    </select>
-                </div>
+<%--                <br>--%>
+<%--                <div>--%>
+<%--                    <select name="customer_id">--%>
+<%--                        <option>------------------------Chọn khách hàng------------------------</option>--%>
+<%--                        <c:forEach items="${liquidationContracts}" var="customer">--%>
+<%--                            <option value="${customer.customerId}">${customer.customerId}</option>--%>
+<%--                        </c:forEach>--%>
+<%--                    </select>--%>
+<%--                </div>--%>
+<%--                <br>--%>
+<%--                <div>--%>
+<%--                    <select name="employee_id">--%>
+<%--                        <option>------------------------Chọn nhân viên------------------------</option>--%>
+<%--                        <c:forEach items="${liquidationContracts}" var="employee">--%>
+<%--                            <option value="${employee.employeeId}">${employee.employeeId}</option>--%>
+<%--                        </c:forEach>--%>
+<%--                    </select>--%>
+<%--                </div>--%>
+<%--                <br>--%>
+<%--                <div>--%>
+<%--                    <select name="product_id">--%>
+<%--                        <option>------------------------Chọn sản phẩm------------------------</option>--%>
+<%--                        <c:forEach items="${liquidationContracts}" var="product">--%>
+<%--                            <option value="${product.productId}">${product.productId}</option>--%>
+<%--                        </c:forEach>--%>
+<%--                    </select>--%>
+<%--                </div>--%>
                 <div class="col-12 text-center mt-4">
-                    <button type="submit" class="btn btn-primary px-5">Thêm sản phẩm</button>
+                    <button type="submit" class="btn btn-primary px-5">Thêm hợp đồng</button>
                 </div>
             </form>
         </div>

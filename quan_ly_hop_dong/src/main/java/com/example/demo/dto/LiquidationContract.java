@@ -10,6 +10,9 @@ public class LiquidationContract {
     private int customerId;
     private int employeeId;
     private int productId;
+    private String customerName;
+    private String employeeName;
+    private String productName;
 
     public LiquidationContract() {
     }
@@ -23,16 +26,24 @@ public class LiquidationContract {
         this.productId = productId;
     }
 
-    public LiquidationContract(int liquidationContractId, LocalDate liquidationDate, double liquidationPrice, int productId) {
+    public LiquidationContract(int liquidationContractId, LocalDate liquidationDate, double liquidationPrice, String productName) {
         this.liquidationContractId = liquidationContractId;
         this.liquidationDate = liquidationDate;
         this.liquidationPrice = liquidationPrice;
-        this.productId = productId;
+        this.productName = productName;
     }
     public LiquidationContract(int liquidationContractId, LocalDate liquidationDate, double liquidationPrice) {
         this.liquidationContractId = liquidationContractId;
         this.liquidationDate = liquidationDate;
         this.liquidationPrice = liquidationPrice;
+    }
+
+    public LiquidationContract(LocalDate liquidationDate, double liquidationPrice, int customerId, int employeeId, int productId) {
+        this.liquidationDate = liquidationDate;
+        this.liquidationPrice = liquidationPrice;
+        this.customerId = customerId;
+        this.employeeId = employeeId;
+        this.productId = productId;
     }
 
     public int getLiquidationContractId() {
@@ -81,5 +92,29 @@ public class LiquidationContract {
 
     public void setProductId(int productId) {
         this.productId = productId;
+    }
+
+    public String getCustomerName() {
+        return customerName;
+    }
+
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
+    }
+
+    public String getEmployeeName() {
+        return employeeName;
+    }
+
+    public void setEmployeeName(String employeeName) {
+        this.employeeName = employeeName;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 }

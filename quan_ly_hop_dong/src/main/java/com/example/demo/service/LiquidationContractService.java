@@ -16,8 +16,8 @@ public class LiquidationContractService implements ILiquidationService {
     }
 
     @Override
-    public boolean add(Product product) {
-        return productDtoRepository.add(product);
+    public boolean add(LiquidationContract liquidationContract) {
+        return productDtoRepository.add(liquidationContract);
     }
 
     @Override
@@ -42,6 +42,6 @@ public class LiquidationContractService implements ILiquidationService {
 
     @Override
     public Product findByIdProduct(int id) {
-        return productDtoRepository.findByIdProduct(id);
+        return productDtoRepository.findByIdContract(id);
     }
 }

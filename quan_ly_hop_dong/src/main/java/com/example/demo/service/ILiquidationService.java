@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface ILiquidationService {
     List<LiquidationContract> findAll();
-    boolean add(Product product);
+    boolean add(LiquidationContract liquidationContract);
     boolean delete(int id);
     boolean update(Product product);
     LiquidationContract findById(int id);

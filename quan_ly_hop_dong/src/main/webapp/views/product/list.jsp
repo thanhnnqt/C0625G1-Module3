@@ -21,19 +21,23 @@
     <form method="get" action="/products" class="row g-2 mb-3">
         <input type="hidden" name="action" value="search"/>
         <div class="col-md-4">
+            <input type="text" name="liquidation_contract_id" class="form-control" placeholder="Nhập id hợp đồng"
+                   value="${param.liquidationContractId}"/>
+        </div>
+        <div class="col-md-4">
             <input type="text" name="product_name" class="form-control" placeholder="Nhập tên sản phẩm"
                    value="${param.productName}"/>
         </div>
-        <div class="col-md-3">
-            <select name="categoryId" class="form-control">
-                <option value="">-- Tất cả danh mục --</option>
-                <c:forEach var="c" items="${categories}">
-                    <option value="${c.id}" ${param.categoryId == c.id ? 'selected' : ''}>
-                            ${c.name}
-                    </option>
-                </c:forEach>
-            </select>
-        </div>
+<%--        <div class="col-md-3">--%>
+<%--            <select name="categoryId" class="form-control">--%>
+<%--                <option value="">-- Tất cả danh mục --</option>--%>
+<%--                <c:forEach var="c" items="${categories}">--%>
+<%--                    <option value="${c.id}" ${param.categoryId == c.id ? 'selected' : ''}>--%>
+<%--                            ${c.name}--%>
+<%--                    </option>--%>
+<%--                </c:forEach>--%>
+<%--            </select>--%>
+<%--        </div>--%>
         <div class="col-md-2">
             <button type="submit" class="btn btn-primary w-100">Tìm kiếm</button>
         </div>
@@ -59,7 +63,7 @@
                 <td>${contract.liquidationContractId}</td>
                 <td>${contract.liquidationDate}</td>
                 <td>${contract.liquidationPrice}</td>
-                <td>${contract.productId}</td>
+                <td>${contract.productName}</td>
                 <td>
                     <a href="/products?action=edit&product_id=${contract.liquidationContractId}"
                        class="btn btn-primary btn-sm">Sửa</a>
@@ -90,7 +94,7 @@
                                         Hủy
                                     </button>
                                     <!-- Nút Xóa thật sự -->
-                                    <a href="/products?action=delete&product_id=${contract.liquidationContractId}"
+                                    <a href="/products?action=delete&liquidation_contract_id=${contract.liquidationContractId}"
                                        class="btn btn-danger">
                                         Xóa
                                     </a>
@@ -112,7 +116,7 @@
         $('#tableProduct').dataTable({
             "dom": 'lrtip',
             "lengthChange": false,
-            "pageLength": 3
+            "pageLength": 5
         });
     });
 </script>

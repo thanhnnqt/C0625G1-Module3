@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 @WebServlet(name = "LiquidationContractController", value = "/products")
@@ -81,21 +82,20 @@ public class LiquidationContractController extends HttpServlet {
 
     private void showCreateForm(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        List<Category> categories = categoryService.findAll();
-        req.setAttribute("categories", categories);
+        List<LiquidationContract> liquidationContracts = liquidationService.findAll();
+        req.setAttribute("liquidationContracts", liquidationContracts);
         req.getRequestDispatcher("views/product/add.jsp").forward(req, resp);
     }
 
     private void createProduct(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
-        String tenSanPham = req.getParameter("product_name");
-        double giaSanPham = Double.parseDouble(req.getParameter("price"));
-        String moTaSanPham = req.getParameter("mo_ta");
-        String hangSanXuat = req.getParameter("hang_san_xuat");
-        int soLuong = Integer.parseInt(req.getParameter("so_luong"));
-        int categoryId = Integer.parseInt(req.getParameter("category_id"));
-        Product product = new Product(tenSanPham, giaSanPham, moTaSanPham, hangSanXuat, soLuong, categoryId);
-        liquidationService.add(product);
+        LocalDate liquidationDate = LocalDate.parse(req.getParameter("liquidation_date"));
+        double liquidationPrice = Double.parseDouble(req.getParameter("price"));
+        int customerId = Integer.parseInt(req.getParameter("customer_id"));
+        int employeeId = Integer.parseInt(req.getParameter("employee_id"));
+        int productId = Integer.parseInt(req.getParameter("product_id"));
+        LiquidationContract liquidationContract = new LiquidationContract(liquidationDate, liquidationPrice, customerId, employeeId, productId);
+        liquidationService.add(liquidationContract);
         resp.sendRedirect("/products");
     }
 
@@ -137,7 +137,7 @@ public class LiquidationContractController extends HttpServlet {
 
     private void deleteProduct(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
-        int id = Integer.parseInt(req.getParameter("product_id").trim());
+        int id = Integer.parseInt(req.getParameter("liquidation_contract_id").trim());
             liquidationService.delete(id);
         resp.sendRedirect("/products");
     }
