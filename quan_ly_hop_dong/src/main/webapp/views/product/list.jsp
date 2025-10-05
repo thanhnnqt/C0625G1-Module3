@@ -45,56 +45,52 @@
         <thead>
         <tr>
             <th>STT</th>
+            <th>Id hợp đồng</th>
+            <th>Ngày tạo hợp đồng</th>
+            <th>Giá trị hợp đồng</th>
             <th>Tên sản phẩm</th>
-            <th>Giá sản phẩm (triệu VNĐ)</th>
-            <th>Loại sản phẩm</th>
-            <th>Hãng sản xuất</th>
-            <th>Số lượng</th>
-            <th>Mô tả</th>
             <th>Thao tác</th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="product" items="${products}" varStatus="status">
+        <c:forEach var="contract" items="${products}" varStatus="status">
             <tr>
                 <td>${status.count}</td>
-                <td>${product.tenSanPham}</td>
-                <td>${product.giaSanPham}</td>
-                <td>${product.moTaSanPham}</td>
-                <td>${product.hangSanXuat}</td>
-                <td>${product.soLuong}</td>
-                <td>${product.categoryName}</td>
+                <td>${contract.liquidationContractId}</td>
+                <td>${contract.liquidationDate}</td>
+                <td>${contract.liquidationPrice}</td>
+                <td>${contract.productId}</td>
                 <td>
-                    <a href="/products?action=edit&product_id=${product.maSanPham}"
+                    <a href="/products?action=edit&product_id=${contract.liquidationContractId}"
                        class="btn btn-primary btn-sm">Sửa</a>
                     <button type="button" class="btn btn-danger btn-sm"
                             data-bs-toggle="modal"
-                            data-bs-target="#deleteModal${product.maSanPham}">
+                            data-bs-target="#deleteModal${contract.liquidationContractId}">
                         Xóa
                     </button>
 
                     <!-- Modal xác nhận -->
-                    <div class="modal fade" id="deleteModal${product.maSanPham}" tabindex="-1"
-                         aria-labelledby="deleteModalLabel${product.maSanPham}" aria-hidden="true">
+                    <div class="modal fade" id="deleteModal${contract.liquidationContractId}" tabindex="-1"
+                         aria-labelledby="deleteModalLabel${contract.liquidationContractId}" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title" style="color: black"
-                                        id="deleteModalLabel${product.maSanPham}">
+                                        id="deleteModalLabel${contract.liquidationContractId}">
                                         Xác nhận xóa sản phẩm
                                     </h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                             aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body text-color-black" style="color: black">
-                                    Bạn có chắc muốn xóa <strong>${product.tenSanPham}</strong> không?
+                                    Bạn có chắc muốn xóa <strong>${contract.liquidationContractId}</strong> không?
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
                                         Hủy
                                     </button>
                                     <!-- Nút Xóa thật sự -->
-                                    <a href="/products?action=delete&product_id=${product.maSanPham}"
+                                    <a href="/products?action=delete&product_id=${contract.liquidationContractId}"
                                        class="btn btn-danger">
                                         Xóa
                                     </a>

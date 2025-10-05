@@ -1,48 +1,47 @@
 package com.example.demo.repository;
 
-import com.example.demo.dto.ProductDto;
+import com.example.demo.dto.LiquidationContract;
 import com.example.demo.entity.Product;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductDtoRepository implements IProductDtoRepository {
-    private static final String SELECT_ALL_PRODUCT = "select p.product_id, p.product_name, p.price, p.mo_ta, p.hang_san_xuat, p.so_luong, c.category_name " +
-            "from product p join category c on p.category_id = c.category_id order by p.product_id asc";
-    private static final String INSERT_PRODUCT = "insert into product (product_name, price, mo_ta, hang_san_xuat, so_luong, category_id) values(?, ?, ?, ?, ?, ?)";
+public class LiquidationContractRepository implements ILiquidationContractRepository {
+    private static final String SELECT_ALL = "select l.liquidation_contract_id, l.liquidation_date, l.price, p.product_id " +
+            "from liquidation_contract l join product p on p.product_id = l.product_id order by p.product_id asc";
+    private static final String INSERT = "insert into liquidation_contract " +
+            "(liquidation_contract_id, liquidation_date, price, product_id) values(?, ?, ?, ?)";
 
     @Override
-    public List<ProductDto> findAll() {
-        List<ProductDto> productList = new ArrayList<>();
+    public List<LiquidationContract> findAll() {
+        List<LiquidationContract> liquidationContractList = new ArrayList<>();
         Connection connection = BaseRepository.getConnectDB();
         try {
-            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL_PRODUCT);
+            PreparedStatement preparedStatement = connection.prepareStatement(SELECT_ALL);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                int id = rs.getInt("product_id");
-                String name = rs.getString("product_name");
+                int liquidationContractId = rs.getInt("liquidation_contract_id");
+                LocalDate liquidationDate = rs.getDate("liquidation_date").toLocalDate();
                 double price = rs.getDouble("price");
-                String moTaSanPham = rs.getString("mo_ta");
-                String hangSanXuat = rs.getString("hang_san_xuat");
-                int soLuong = rs.getInt("so_luong");
-                String categoryName = rs.getString("category_name");
-                ProductDto product = new ProductDto(id, name, price, moTaSanPham, hangSanXuat, soLuong, categoryName);
-                productList.add(product);
+                int productId = rs.getInt("product_id");
+                LiquidationContract liquidationContract = new LiquidationContract(liquidationContractId, liquidationDate, price, productId);
+                liquidationContractList.add(liquidationContract);
             }
         } catch (SQLException e) {
             System.out.println("Error when getting products: " + e.getMessage());
         }
-        return productList;
+        return liquidationContractList;
     }
 
     @Override
     public boolean add(Product product) {
         try (Connection connection = BaseRepository.getConnectDB();
-             PreparedStatement ps = connection.prepareStatement(INSERT_PRODUCT)) {
+             PreparedStatement ps = connection.prepareStatement(INSERT)) {
             ps.setString(1, product.getTenSanPham());
             ps.setDouble(2, product.getGiaSanPham());
             ps.setString(3, product.getMoTaSanPham());
@@ -93,12 +92,12 @@ public class ProductDtoRepository implements IProductDtoRepository {
 
 
     @Override
-    public ProductDto findById(int id) {
+    public LiquidationContract findById(int id) {
         return null;
     }
 
-    public List<ProductDto> search(String searchName, String categoryId) {
-        List<ProductDto> list = new ArrayList<>();
+    public List<LiquidationContract> search(String searchName, String categoryId) {
+        List<LiquidationContract> list = new ArrayList<>();
         StringBuilder sql = new StringBuilder("SELECT p.product_id, p.product_name, p.price, p.mo_ta, p.hang_san_xuat, p.so_luong, c.category_name "
                 + "FROM product p JOIN category c ON p.category_id = c.category_id WHERE 1=1");
         if (searchName != null && !searchName.isEmpty()) {
@@ -118,13 +117,11 @@ public class ProductDtoRepository implements IProductDtoRepository {
             }
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                list.add(new ProductDto(rs.getInt("product_id"),
-                        rs.getString("product_name"),
+                list.add(new LiquidationContract(
+                        rs.getInt("liquidation_contract_id"),
+                        rs.getDate("product_name").toLocalDate(),
                         rs.getDouble("price"),
-                        rs.getString("mo_ta"),
-                        rs.getString("hang_san_xuat"),
-                        rs.getInt("so_luong"),
-                        rs.getString("category_name")));
+                        rs.getInt("product_name")));
             }
         } catch (SQLException e) {
             e.printStackTrace();

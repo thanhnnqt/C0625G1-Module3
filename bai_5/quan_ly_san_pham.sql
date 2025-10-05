@@ -38,3 +38,9 @@ select * from category;
 select * from product;
 select * from product p join category c on p.category_id = c.category_id;
 select p.*, c.category_name from product p join category c on p.category_id = c.category_id where p.product_name like "%%" and c.category_id = 2;
+select p.product_id, p.product_name, p.price, p.mo_ta, p.hang_san_xuat, p.so_luong, c.category_name AS categoryName from product p join category c on p.category_id = c.category_id;
+SELECT p.product_id, p.product_name, p.price, p.mo_ta, p.hang_san_xuat, p.so_luong, c.category_name 
+AS categoryName FROM product p JOIN category c ON p.category_id = c.category_id WHERE 1=1  and p.product_name like '%samsung%' and c.category_id = 2;
+delete from product where product_id = 17;
+SELECT product_id, product_name, price, mo_ta, hang_san_xuat, so_luong, category_id FROM product WHERE category_id = 4;
+UPDATE product SET product_name = "Thành", price = 50, mo_ta = "Không có gì", hang_san_xuat = "Không ai cả", so_luong = 55, category_id = 2 WHERE product_id = 19;
