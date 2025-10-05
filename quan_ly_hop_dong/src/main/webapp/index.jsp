@@ -6,7 +6,7 @@
     <title>Danh sách sản phẩm</title>
 </head>
 <body>
-<c:redirect url="/products">
+<c:redirect url="/liquidation-contract">
 </c:redirect>
 </body>
 </html>

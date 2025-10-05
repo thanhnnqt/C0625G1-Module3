@@ -241,3 +241,9 @@ select *
 from pawn_contract;
 select *
 from liquidation_contract;
+select l.liquidation_contract_id, l.liquidation_date, l.price, p.product_name
+from liquidation_contract l 
+-- join customer c on c.customer_id = l.customer_id c.full_name, e.full_name, 
+-- join employee e on e.employee_id = l.customer_id
+join product p on p.product_id = l.product_id;
+delete from liquidation_contract where liquidation_contract_id = 16;

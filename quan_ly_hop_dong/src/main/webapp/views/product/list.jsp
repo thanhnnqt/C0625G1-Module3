@@ -18,31 +18,21 @@
 <div class="container mt-4">
     <c:import url="../layout/navbar.jsp"/>
     <h1>Danh sách sản phẩm</h1>
-    <form method="get" action="/products" class="row g-2 mb-3">
+    <form method="get" action="/liquidation-contract" class="row g-2 mb-3">
         <input type="hidden" name="action" value="search"/>
         <div class="col-md-4">
-            <input type="text" name="liquidation_contract_id" class="form-control" placeholder="Nhập id hợp đồng"
-                   value="${param.liquidationContractId}"/>
+            <input type="text" name="full_name" class="form-control" placeholder="Nhập tên khách hàng"
+                   value="${param.customerName}"/>
         </div>
         <div class="col-md-4">
             <input type="text" name="product_name" class="form-control" placeholder="Nhập tên sản phẩm"
                    value="${param.productName}"/>
         </div>
-<%--        <div class="col-md-3">--%>
-<%--            <select name="categoryId" class="form-control">--%>
-<%--                <option value="">-- Tất cả danh mục --</option>--%>
-<%--                <c:forEach var="c" items="${categories}">--%>
-<%--                    <option value="${c.id}" ${param.categoryId == c.id ? 'selected' : ''}>--%>
-<%--                            ${c.name}--%>
-<%--                    </option>--%>
-<%--                </c:forEach>--%>
-<%--            </select>--%>
-<%--        </div>--%>
         <div class="col-md-2">
             <button type="submit" class="btn btn-primary w-100">Tìm kiếm</button>
         </div>
         <div class="col-md-3">
-            <a href="/products?action=create" class="btn btn-success w-100">+ Thêm sản phẩm</a>
+            <a href="/liquidation-contract?action=create" class="btn btn-success w-100">+ Thêm sản phẩm</a>
         </div>
     </form>
     <table id="tableProduct" class="table table-dark table-striped">
@@ -50,6 +40,7 @@
         <tr>
             <th>STT</th>
             <th>Id hợp đồng</th>
+            <th>Khách hàng</th>
             <th>Ngày tạo hợp đồng</th>
             <th>Giá trị hợp đồng</th>
             <th>Tên sản phẩm</th>
@@ -57,16 +48,15 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="contract" items="${products}" varStatus="status">
+        <c:forEach var="contract" items="${liquidationContracts}" varStatus="status">
             <tr>
                 <td>${status.count}</td>
                 <td>${contract.liquidationContractId}</td>
+                <td>${contract.customerName}</td>
                 <td>${contract.liquidationDate}</td>
                 <td>${contract.liquidationPrice}</td>
                 <td>${contract.productName}</td>
                 <td>
-                    <a href="/products?action=edit&product_id=${contract.liquidationContractId}"
-                       class="btn btn-primary btn-sm">Sửa</a>
                     <button type="button" class="btn btn-danger btn-sm"
                             data-bs-toggle="modal"
                             data-bs-target="#deleteModal${contract.liquidationContractId}">
@@ -94,7 +84,7 @@
                                         Hủy
                                     </button>
                                     <!-- Nút Xóa thật sự -->
-                                    <a href="/products?action=delete&liquidation_contract_id=${contract.liquidationContractId}"
+                                    <a href="/liquidation-contract?action=delete&liquidation_contract_id=${contract.liquidationContractId}"
                                        class="btn btn-danger">
                                         Xóa
                                     </a>

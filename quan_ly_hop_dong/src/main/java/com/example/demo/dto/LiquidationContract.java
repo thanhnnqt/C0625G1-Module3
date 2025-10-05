@@ -26,8 +26,9 @@ public class LiquidationContract {
         this.productId = productId;
     }
 
-    public LiquidationContract(int liquidationContractId, LocalDate liquidationDate, double liquidationPrice, String productName) {
+    public LiquidationContract(int liquidationContractId, String customerName, LocalDate liquidationDate, double liquidationPrice, String productName) {
         this.liquidationContractId = liquidationContractId;
+        this.customerName = customerName;
         this.liquidationDate = liquidationDate;
         this.liquidationPrice = liquidationPrice;
         this.productName = productName;

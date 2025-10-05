@@ -2,7 +2,6 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.LiquidationContract;
 import com.example.demo.entity.Category;
-import com.example.demo.entity.Product;
 import com.example.demo.service.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -14,7 +13,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
-@WebServlet(name = "LiquidationContractController", value = "/products")
+@WebServlet(name = "LiquidationContractController", value = "/liquidation-contract")
 public class LiquidationContractController extends HttpServlet {
     ILiquidationService liquidationService = new LiquidationContractService();
     ICategoryService categoryService = new CategoryService();
@@ -28,9 +27,6 @@ public class LiquidationContractController extends HttpServlet {
         switch (action) {
             case "create":
                 showCreateForm(req, resp);
-                break;
-            case "edit":
-                showEditForm(req, resp);
                 break;
             case "delete":
                 deleteProduct(req, resp);
@@ -51,9 +47,6 @@ public class LiquidationContractController extends HttpServlet {
             case "create":
                 createProduct(req, resp);
                 break;
-            case "edit":
-                updateProduct(req, resp);
-                break;
             default:
                 listProducts(req, resp);
                 break;
@@ -62,21 +55,21 @@ public class LiquidationContractController extends HttpServlet {
 
     private void listProducts(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        String searchName = req.getParameter("product_name");
-        String searchCategory = req.getParameter("categoryId");
+        String customerName = req.getParameter("full_name");
+        String productName = req.getParameter("product_name");
 
-        List<LiquidationContract> products;
-        if ((searchName != null && !searchName.isEmpty()) ||
-                (searchCategory != null && !searchCategory.isEmpty())) {
-            products = liquidationService.search(searchName, searchCategory);
+        List<LiquidationContract> liquidationContracts;
+        if ((customerName != null && !customerName.isEmpty()) ||
+                (productName != null && !productName.isEmpty())) {
+            liquidationContracts = liquidationService.search(customerName, productName);
         } else {
-            products = liquidationService.findAll();
+            liquidationContracts = liquidationService.findAll();
         }
         List<Category> categories = categoryService.findAll();
-        req.setAttribute("products", products);
+        req.setAttribute("liquidationContracts", liquidationContracts);
         req.setAttribute("categories", categories);
-        req.setAttribute("selectedCategory", searchCategory);
-        req.setAttribute("searchName", searchName);
+        req.setAttribute("customerName", customerName);
+        req.setAttribute("productName", productName);
         req.getRequestDispatcher("views/product/list.jsp").forward(req, resp);
     }
 
@@ -96,49 +89,13 @@ public class LiquidationContractController extends HttpServlet {
         int productId = Integer.parseInt(req.getParameter("product_id"));
         LiquidationContract liquidationContract = new LiquidationContract(liquidationDate, liquidationPrice, customerId, employeeId, productId);
         liquidationService.add(liquidationContract);
-        resp.sendRedirect("/products");
-    }
-
-    private void showEditForm(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
-        int id = Integer.parseInt(req.getParameter("product_id").trim());
-        Product product = liquidationService.findByIdProduct(id);
-        List<Category> categories = categoryService.findAll();
-        req.setAttribute("product", product);
-        req.setAttribute("categories", categories);
-        req.getRequestDispatcher("views/product/update.jsp").forward(req, resp);
-    }
-
-    private void updateProduct(HttpServletRequest req, HttpServletResponse resp)
-            throws IOException {
-        try {
-            int maSanPham = Integer.parseInt(req.getParameter("product_id"));
-            String tenSanPham = req.getParameter("product_name");
-            double giaSanPham = Double.parseDouble(req.getParameter("price"));
-            String moTaSanPham = req.getParameter("mo_ta");
-            String hangSanXuat = req.getParameter("hang_san_xuat");
-            int soLuong = Integer.parseInt(req.getParameter("so_luong"));
-            int categoryId = Integer.parseInt(req.getParameter("category_id"));
-            Product product = new Product(maSanPham, tenSanPham, giaSanPham, moTaSanPham, hangSanXuat, soLuong, categoryId);
-
-            boolean updated = liquidationService.update(product);
-            if (updated) {
-                System.out.println("Update thành công: " + maSanPham);
-            } else {
-                System.out.println("Update thất bại: " + maSanPham);
-            }
-
-            resp.sendRedirect("/products");
-        } catch (NumberFormatException e) {
-            e.printStackTrace();
-            resp.sendRedirect("/products");
-        }
+        resp.sendRedirect("/liquidation-contract");
     }
 
     private void deleteProduct(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
         int id = Integer.parseInt(req.getParameter("liquidation_contract_id").trim());
             liquidationService.delete(id);
-        resp.sendRedirect("/products");
+        resp.sendRedirect("/liquidation-contract");
     }
 }

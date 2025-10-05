@@ -35,7 +35,7 @@
     <div class="row justify-content-center">
         <div class="col-md-10 form-container">
             <h2 class="mb-4">Thêm hợp đồng thanh lý mới</h2>
-            <form action="/products?action=create" method="post">
+            <form action="/liquidation-contract?action=create" method="post">
                 <div>
                     <label class="form-label">Ngày tạo hợp đồng</label>
                     <input name="liquidation_date" type="date" class="form-control" required>

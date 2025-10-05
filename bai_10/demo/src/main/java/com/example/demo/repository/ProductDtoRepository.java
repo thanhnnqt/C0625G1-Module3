@@ -71,24 +71,24 @@ public class ProductDtoRepository implements IProductDtoRepository {
     }
 
     public boolean update(Product product) {
-        final String SQL = "UPDATE product SET product_name = ?, price = ?, mo_ta = ?, hang_san_xuat = ?, so_luong = ?, category_id = ? WHERE product_id = ?";
-        try (Connection connection = BaseRepository.getConnectDB();
-             PreparedStatement ps = connection.prepareStatement(SQL)) {
-
-            ps.setString(1, product.getTenSanPham());
-            ps.setDouble(2, product.getGiaSanPham());
-            ps.setString(3, product.getMoTaSanPham());
-            ps.setString(4, product.getHangSanXuat());
-            ps.setInt(5, product.getSoLuong());
-            ps.setInt(6, product.getcId());
-            ps.setInt(7, product.getMaSanPham());
-
-            int rows = ps.executeUpdate();
-            return rows > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
+//        final String SQL = "UPDATE product SET product_name = ?, price = ?, mo_ta = ?, hang_san_xuat = ?, so_luong = ?, category_id = ? WHERE product_id = ?";
+//        try (Connection connection = BaseRepository.getConnectDB();
+//             PreparedStatement ps = connection.prepareStatement(SQL)) {
+//
+//            ps.setString(1, product.getTenSanPham());
+//            ps.setDouble(2, product.getGiaSanPham());
+//            ps.setString(3, product.getMoTaSanPham());
+//            ps.setString(4, product.getHangSanXuat());
+//            ps.setInt(5, product.getSoLuong());
+//            ps.setInt(6, product.getcId());
+//            ps.setInt(7, product.getMaSanPham());
+//
+//            int rows = ps.executeUpdate();
+//            return rows > 0;
+//        } catch (SQLException e) {
+//            e.printStackTrace();
             return false;
-        }
+//        }
     }
 
 
@@ -133,25 +133,25 @@ public class ProductDtoRepository implements IProductDtoRepository {
     }
 
     public Product findByIdProduct(int id) {
-        String sql = "SELECT product_id, product_name, price, mo_ta, hang_san_xuat, so_luong, category_id FROM product WHERE product_id = ?";
-        try (Connection connection = BaseRepository.getConnectDB();
-             PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                return new Product(
-                        rs.getInt("product_id"),
-                        rs.getString("product_name"),
-                        rs.getDouble("price"),
-                        rs.getString("mo_ta"),
-                        rs.getString("hang_san_xuat"),
-                        rs.getInt("so_luong"),
-                        rs.getInt("caterogy_id")
-                );
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+//        String sql = "SELECT product_id, product_name, price, mo_ta, hang_san_xuat, so_luong, category_id FROM product WHERE product_id = ?";
+//        try (Connection connection = BaseRepository.getConnectDB();
+//             PreparedStatement ps = connection.prepareStatement(sql)) {
+//            ps.setInt(1, id);
+//            ResultSet rs = ps.executeQuery();
+//            if (rs.next()) {
+//                return new Product(
+//                        rs.getInt("product_id"),
+//                        rs.getString("product_name"),
+//                        rs.getDouble("price"),
+//                        rs.getString("mo_ta"),
+//                        rs.getString("hang_san_xuat"),
+//                        rs.getInt("so_luong"),
+//                        rs.getInt("caterogy_id")
+//                );
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
         return null;
     }
 }
