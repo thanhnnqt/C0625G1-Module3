@@ -1,19 +1,9 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ page import="com.example.demo.entity.Account" %>
-<%
-    Account acc = (Account) session.getAttribute("account");
-    if (acc == null || !"admin".equals(acc.getRole())) {
-        response.sendRedirect("../login.jsp");
-        return;
-    }
-%>
 <html>
-<head><title>Trang quản trị</title></head>
+<head><title>Admin Home</title></head>
 <body>
-<h2>Xin chào, <%= acc.getUsername() %> (Admin)</h2>
-<p>Chào mừng bạn đến với khu vực quản trị!</p>
-<form action="../../logout" method="post">
-    <button type="submit">Đăng xuất</button>
-</form>
+<h2>Chào mừng Admin: ${account.username}</h2>
+<p>Vai trò của bạn: ${account.role}</p>
+<a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
 </body>
 </html>

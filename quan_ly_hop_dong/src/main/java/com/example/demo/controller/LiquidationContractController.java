@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.LiquidationContract;
-import com.example.demo.entity.Category;
 import com.example.demo.service.*;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

@@ -7,8 +7,8 @@ import jakarta.servlet.http.*;
 
 import java.io.IOException;
 
-@WebServlet("/admin-home")
-public class AdminController extends HttpServlet {
+@WebServlet("/customer-home")
+public class UserController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -16,13 +16,12 @@ public class AdminController extends HttpServlet {
         HttpSession session = req.getSession(false);
         Account acc = (session != null) ? (Account) session.getAttribute("account") : null;
 
-        // Nếu chưa đăng nhập, chuyển về login
-        if (acc == null || !"ADMIN".equalsIgnoreCase(acc.getRole())) {
+        if (acc == null || !"USER".equalsIgnoreCase(acc.getRole())) {
             resp.sendRedirect(req.getContextPath() + "/login");
             return;
         }
 
         req.setAttribute("account", acc);
-        req.getRequestDispatcher("views/admin/home.jsp").forward(req, resp);
+        req.getRequestDispatcher("views/customer/home.jsp").forward(req, resp);
     }
 }

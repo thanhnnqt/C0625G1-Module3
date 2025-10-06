@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.entity.Account;
-import com.example.demo.repository.AccountRepository;
+import com.example.demo.repository.LoginRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -10,7 +10,7 @@ import java.io.IOException;
 
 @WebServlet("/login")
 public class LoginController extends HttpServlet {
-    private final AccountRepository accountRepository = new AccountRepository();
+    private final LoginRepository accountRepository = new LoginRepository();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -32,13 +32,13 @@ public class LoginController extends HttpServlet {
             // Điều hướng theo role
             switch (acc.getRole()) {
                 case "ADMIN":
-                    resp.sendRedirect("liquidation-contract?action=create");
+                    resp.sendRedirect("/admin-home");
                     break;
                 case "STAFF":
-                    resp.sendRedirect("views/employee/home.jsp");
+                    resp.sendRedirect("/employee-home");
                     break;
                 case "USER":
-                    resp.sendRedirect("/liquidation-contract");
+                    resp.sendRedirect("/customer-home");
                     break;
                 default:
                     resp.sendRedirect("views/login/login.jsp");

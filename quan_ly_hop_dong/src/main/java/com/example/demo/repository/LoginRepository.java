@@ -6,7 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-public class AccountRepository {
+public class LoginRepository {
     public Account login(String username, String password) {
         String sql = "SELECT * FROM account WHERE username = ? AND password = ?";
         try (Connection conn = BaseRepository.getConnectDB();
