@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Account;
+import com.example.demo.entity.Login;
 import com.example.demo.repository.LoginRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -24,7 +24,7 @@ public class LoginController extends HttpServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
-        Account acc = accountRepository.login(username, password);
+        Login acc = accountRepository.login(username, password);
         if (acc != null) {
             HttpSession session = req.getSession();
             session.setAttribute("account", acc);

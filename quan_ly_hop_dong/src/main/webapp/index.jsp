@@ -1,7 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.example.demo.entity.Account" %>
+<%@ page import="com.example.demo.entity.Login" %>
 <%
-    Account acc = (Account) session.getAttribute("account");
+    Login acc = (Login) session.getAttribute("account");
 
     if (acc == null) {
         // Nếu chưa đăng nhập → đến login

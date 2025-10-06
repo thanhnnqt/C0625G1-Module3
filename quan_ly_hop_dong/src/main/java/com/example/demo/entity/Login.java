@@ -1,6 +1,6 @@
 package com.example.demo.entity;
 
-public class Account {
+public class Login {
     private int id;
     private String username;
     private String password;

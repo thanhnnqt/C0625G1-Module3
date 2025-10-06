@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Account;
+import com.example.demo.entity.Login;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
@@ -14,7 +14,7 @@ public class StaffController extends HttpServlet {
             throws ServletException, IOException {
 
         HttpSession session = req.getSession(false);
-        Account acc = (session != null) ? (Account) session.getAttribute("account") : null;
+        Login acc = (session != null) ? (Login) session.getAttribute("account") : null;
 
         if (acc == null || !"STAFF".equalsIgnoreCase(acc.getRole())) {
             resp.sendRedirect(req.getContextPath() + "/login");

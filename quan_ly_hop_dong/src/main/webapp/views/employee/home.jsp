@@ -4,6 +4,7 @@
 <body>
 <h2>Chào nhân viên: ${account.username}</h2>
 <p>Vai trò: ${account.role}</p>
+<a href="${pageContext.request.contextPath}/liquidation-contract">Quản lý hợp đồng</a><br>
 <a href="${pageContext.request.contextPath}/logout">Đăng xuất</a>
 </body>
 </html>

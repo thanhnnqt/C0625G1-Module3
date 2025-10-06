@@ -6,7 +6,7 @@ CREATE TABLE `account`
 (
     account_id    INT AUTO_INCREMENT PRIMARY KEY,
     username      VARCHAR(50) UNIQUE NOT NULL,
-    password_hash VARCHAR(255)       NOT NULL,
+    password VARCHAR(255)       NOT NULL,
     `role`        ENUM('ADMIN', 'STAFF', 'USER') NOT NULL
 );
 
@@ -83,7 +83,7 @@ CREATE TABLE liquidation_contract
 -- ==========================
 -- 1. Account (20 tài khoản)
 -- ==========================
-INSERT INTO account (username, password_hash, `role`)
+INSERT INTO account (username, password, `role`)
 VALUES ('user1', 'pass1', 'USER'),
        ('user2', 'pass2', 'USER'),
        ('user3', 'pass3', 'USER'),
@@ -241,9 +241,15 @@ select *
 from pawn_contract;
 select *
 from liquidation_contract;
-select l.liquidation_contract_id, l.liquidation_date, l.price, p.product_name
+select l.liquidation_contract_id, c.full_name, l.liquidation_date, l.price, p.product_name
 from liquidation_contract l 
--- join customer c on c.customer_id = l.customer_id c.full_name, e.full_name, 
+left join customer c on c.customer_id = l.customer_id
 -- join employee e on e.employee_id = l.customer_id
 join product p on p.product_id = l.product_id;
 delete from liquidation_contract where liquidation_contract_id = 16;
+select l.liquidation_contract_id, c.full_name, l.liquidation_date, l.price, p.product_name 
+from liquidation_contract l 
+join product p on p.product_id = l.product_id
+left join customer c on c.customer_id = l.customer_id
+where 1 = 1
+and p.product_name like '%iphone%';

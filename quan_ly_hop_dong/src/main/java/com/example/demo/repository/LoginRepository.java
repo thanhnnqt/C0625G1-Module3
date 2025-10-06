@@ -1,13 +1,13 @@
 package com.example.demo.repository;
 
-import com.example.demo.entity.Account;
+import com.example.demo.entity.Login;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class LoginRepository {
-    public Account login(String username, String password) {
+    public Login login(String username, String password) {
         String sql = "SELECT * FROM account WHERE username = ? AND password = ?";
         try (Connection conn = BaseRepository.getConnectDB();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -15,7 +15,7 @@ public class LoginRepository {
             ps.setString(2, password);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                Account acc = new Account();
+                Login acc = new Login();
                 acc.setId(rs.getInt("account_id"));
                 acc.setUsername(rs.getString("username"));
                 acc.setRole(rs.getString("role"));
