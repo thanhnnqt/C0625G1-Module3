@@ -7,6 +7,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="jakarta.tags.fmt" %>
 <html>
 <head>
     <title>Title</title>
@@ -54,7 +55,7 @@
                 <td>${contract.liquidationContractId}</td>
                 <td>${contract.customerName}</td>
                 <td>${contract.liquidationDate}</td>
-                <td>${contract.liquidationPrice}</td>
+                <td><fmt:formatNumber value="${contract.liquidationPrice}" type="currency" currencySymbol="₫"/></td>
                 <td>${contract.productName}</td>
                 <td>
                     <button type="button" class="btn btn-danger btn-sm"

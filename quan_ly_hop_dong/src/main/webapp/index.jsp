@@ -1,12 +1,11 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Danh sách sản phẩm</title>
-</head>
-<body>
-<c:redirect url="/liquidation-contract">
-</c:redirect>
-</body>
-</html>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page import="com.example.demo.entity.Account" %>
+<%
+    Account acc = (Account) session.getAttribute("account");
+
+    if (acc == null) {
+        // Nếu chưa đăng nhập → đến login
+        response.sendRedirect("views/login/login.jsp");
+        return;
+    }
+%>

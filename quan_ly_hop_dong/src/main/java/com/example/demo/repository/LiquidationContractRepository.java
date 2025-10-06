@@ -1,7 +1,6 @@
 package com.example.demo.repository;
 
 import com.example.demo.dto.LiquidationContract;
-import com.example.demo.entity.Product;
 
 import java.sql.*;
 import java.time.LocalDate;

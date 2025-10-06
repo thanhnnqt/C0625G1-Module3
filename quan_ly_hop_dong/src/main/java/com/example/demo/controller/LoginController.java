@@ -1,0 +1,52 @@
+package com.example.demo.controller;
+
+import com.example.demo.entity.Account;
+import com.example.demo.repository.AccountRepository;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.*;
+
+import java.io.IOException;
+
+@WebServlet("/login")
+public class LoginController extends HttpServlet {
+    private final AccountRepository accountRepository = new AccountRepository();
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        req.getRequestDispatcher("views/login/login.jsp").forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        String username = req.getParameter("username");
+        String password = req.getParameter("password");
+
+        Account acc = accountRepository.login(username, password);
+        if (acc != null) {
+            HttpSession session = req.getSession();
+            session.setAttribute("account", acc);
+
+            // Điều hướng theo role
+            switch (acc.getRole()) {
+                case "ADMIN":
+                    resp.sendRedirect("liquidation-contract?action=create");
+                    break;
+                case "STAFF":
+                    resp.sendRedirect("views/employee/home.jsp");
+                    break;
+                case "USER":
+                    resp.sendRedirect("/liquidation-contract");
+                    break;
+                default:
+                    resp.sendRedirect("views/login/login.jsp");
+                    break;
+            }
+        } else {
+            req.setAttribute("error", "Sai tên đăng nhập hoặc mật khẩu!");
+            req.getRequestDispatcher("views/login/login.jsp").forward(req, resp);
+        }
+    }
+}

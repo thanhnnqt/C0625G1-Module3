@@ -16,7 +16,6 @@ import java.util.List;
 @WebServlet(name = "LiquidationContractController", value = "/liquidation-contract")
 public class LiquidationContractController extends HttpServlet {
     ILiquidationService liquidationService = new LiquidationContractService();
-    ICategoryService categoryService = new CategoryService();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -65,9 +64,7 @@ public class LiquidationContractController extends HttpServlet {
         } else {
             liquidationContracts = liquidationService.findAll();
         }
-        List<Category> categories = categoryService.findAll();
         req.setAttribute("liquidationContracts", liquidationContracts);
-        req.setAttribute("categories", categories);
         req.setAttribute("customerName", customerName);
         req.setAttribute("productName", productName);
         req.getRequestDispatcher("views/product/list.jsp").forward(req, resp);
